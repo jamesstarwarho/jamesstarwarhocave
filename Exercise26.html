@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        #square {
+            width: 200px;
+            height: 200px;
+            background-color: white;
+            border: 2px solid black;
+            text-align: center;
+            position: relative;
+        }
+
+        #button {
+            margin-top: 80px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="square">
+    <p id="text">Hello</p>
+    <button id="button" onmouseover="changeTextColor()" onmouseout="revertTextColor()" onclick="changeText()">Button</button>
+</div>
+
+<script>
+    var clicked = false;
+
+    function changeTextColor() {
+        if (!clicked) {
+            var text = document.getElementById('text');
+            text.style.color = 'magenta';
+        }
+    }
+
+    function revertTextColor() {
+        if (!clicked) {
+            var text = document.getElementById('text');
+            text.style.color = '';
+        }
+    }
+
+    function changeText() {
+        var text = document.getElementById('text');
+        text.innerText = 'Mouse Click';
+        clicked = true;
+    }
+</script>
+
+</body>
+</html>
