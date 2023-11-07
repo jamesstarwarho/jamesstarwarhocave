@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+
+    </style>
+
+    <script>
+        function validateForm() {
+            let x = document.forms["myForm"]["fNumber"].value;
+            if (x < 150) {
+                document.getElementById("demo").innerHTML = "Value too small";
+                return false;
+            } else if (x > 300) {
+                document.getElementById("demo").innerHTML = "Value too large";
+                return false;
+            } else {
+                document.getElementById("demo").innerHTML = "Input OK";
+                return false;
+            }
+        }
+
+        document.getElementById("demo").innerHTML = "Hello JavaScript";
+    </script>
+</head>
+
+<body>
+    <p>Please input a number between 150 and 300: </p>
+    <form name="myForm" action="/action_page.php" onsubmit="return validateForm()" method="post">
+        <input type="text" name="fNumber">
+        <input type="submit" value="Submit">
+        <p id="demo"></p>
+    </form>
+</body>
+
+</html>
