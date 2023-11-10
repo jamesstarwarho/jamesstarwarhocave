@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    .container {
+      display: grid;
+      grid-template-columns: 300px 300px;
+      grid-template-rows: 200px 200px;
+      gap: 1%;
+      margin: 50px;
+    }
+
+    .cell {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: blue;
+      font-size: 3em;
+    }
+  </style>
+</head>
+
+
+<body id="body" onload="registerAllEvents()">
+  <div class="container">
+    <div id="divA" class="cell">A</div>
+    <div id="divB" class="cell">B</div>
+    <div id="divC" class="cell">C</div>
+    <div id="divD" class="cell">D</div>
+
+
+    <script>
+      // since html does not have a "mouseenter/mouseleave event" (and to avoid confusion), I will put ALL events in registerAllEvents()
+      function registerAllEvents() {
+        var divA = document.getElementById("divA");
+        var divB = document.getElementById("divB");
+        var divC = document.getElementById("divC");
+
+
+        // onClick for "A"
+        divA.addEventListener("click", function () {
+          if (divA.style.backgroundColor == "silver") {
+            divA.style.backgroundColor = "gold";
+          } else {
+            divA.style.backgroundColor = "silver";
+          }
+        });
+
+
+        // onMouseOver for "B"  (change bg to lime, red, yellow, green, blue, lime...)
+        var colors = ["lime", "red", "yellow", "green", "blue"];
+        var colorIndex = 0;
+        divB.addEventListener("mouseover", function () {
+          divB.style.backgroundColor = colors[colorIndex];
+          colorIndex++;
+          if (colorIndex >= colors.length) {
+            colorIndex = 0;
+          }
+        });
+
+
+        // mouseLeave event for "C"  (change bg to green)
+        divC.addEventListener("mouseleave", function () {
+          divC.style.backgroundColor = "green";
+        });
+        // mouseEnter event for "C"  (reset bg to blue)???????
+        divC.addEventListener("mouseenter", function () {
+          divC.style.backgroundColor = "blue";
+        });
+
+
+      }
+    </script>
+</body>
+
+</html>
