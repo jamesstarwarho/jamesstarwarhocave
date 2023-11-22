@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Planets Information</title>
+  <style>
+    body {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      align-items: center;
+    }
+
+    .planet {
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      margin: 10px;
+      padding: 10px;
+      text-align: left;
+    }
+
+    img {
+      width: 300px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <script>
+    const url = 'https://handlers.education.launchcode.org/static/planets.json';
+    const randomPlanets = ["tatooine.jpg", "pern.png", "k2_18b.jpg"];
+    var planetIndex = 0;
+    document.addEventListener('DOMContentLoaded', function () { 
+      fetch(url)
+        .then(response => response.json())
+        .then(data => {
+          data.forEach(planet => {
+            createPlanetContainer(planet);
+          });
+        })
+        .catch(error => console.error('Error fetching data:', error));
+      
+      // use Javascript to planet containers html
+      function createPlanetContainer(planet) {
+        const container = document.body;
+        const planetDiv = document.createElement('div');
+        planetDiv.classList.add('planet');
+
+        const image = document.createElement('img');
+        image.onerror = function () {
+          image.src = "images/" + randomPlanets[planetIndex];
+          planetIndex++;
+          if (planetIndex >= randomPlanets.length){
+            planetIndex = 0;
+          }
+        };
+        image.src = planet.image;
+        image.alt = planet.name;
+        planetDiv.appendChild(image);
+
+        const name = document.createElement('div');
+        name.textContent = `Name: ${planet.name}`;
+        name.innerHTML = `<strong>Name</strong>: ${planet.name}`;
+        planetDiv.appendChild(name);
+
+        const diameter = document.createElement('div');
+        diameter.innerHTML = `<strong>Diameter</strong>: ${planet.diameter}`;
+        planetDiv.appendChild(diameter);
+
+        const star = document.createElement('div');
+        star.innerHTML = `<strong>Star</strong>: ${planet.star}`;
+        planetDiv.appendChild(star);
+
+        const distance = document.createElement('div');
+        distance.innerHTML = `<strong>Distance</strong>: ${planet.distance}`;
+        planetDiv.appendChild(distance);
+
+        const moons = document.createElement('div');
+        moons.innerHTML = `<strong>Moons</strong>: ${planet.moons}`;
+        planetDiv.appendChild(moons);
+
+        container.appendChild(planetDiv);
+      }
+    });
+  </script>
+
+</body>
+
+</html>
