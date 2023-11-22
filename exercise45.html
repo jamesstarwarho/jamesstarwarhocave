@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GitHub Profile Viewer</title>
+  <style>
+    body {
+      text-align: center;
+    }
+
+    #profileContainer {
+      display: none;
+      width: 300px;
+      margin: 5px auto;
+      border: 2px solid gray;
+      padding: 10px;
+      border-radius: 5px;
+    }
+
+    img {
+      max-width: 90%;
+      margin: 20px;
+
+    }
+
+    button {
+      padding: 5px;
+    }
+  </style>
+</head>
+
+<body>
+  <h2>Search Github Profiles</h2>
+
+  <label for="username">Please enter GitHub username:</label>
+  <input type="text" id="username" placeholder="Github username">
+  <button onclick="fetchGithubAPI()">Get Profile</button>
+
+  <div id="profileContainer"></div>
+
+  <script>
+    function fetchGithubAPI() {
+      const username = document.getElementById('username').value;
+      const profileContainer = document.getElementById('profileContainer');
+
+      fetch(`https://api.github.com/users/${username}`)
+        .then(response => response.json())
+        .then(data => {
+          // Check if user not found
+          if (data.message && data.message.toLowerCase() === 'not found') {
+            profileContainer.innerHTML = '<h1>Profile not found</h1>';
+            profileContainer.style.display = 'block';
+          } else {
+            profileContainer.innerHTML = `
+            <img src="${data.avatar_url}" alt="${data.login}">
+            <h3>${data.name || data.login}</h3>
+            <p>${data.company ? `Works at ${data.company}` : ''}</p>
+            <p>${data.email ? `Email: ${data.email}` : ''}</p>
+            <p>${data.location ? `Location: ${data.location}` : ''}</p>
+            <p>${data.blog ? `Blog: <a href="${data.blog}" target="_blank">${data.blog}</a>` : ''}</p>
+            <p>${data.bio ? `Bio: ${data.bio}` : ''}</p>
+            <p>Followers: ${data.followers}</p>
+            <p>Following: ${data.following}</p>
+          `;
+            profileContainer.style.display = 'block';
+          }
+        })
+        .catch(error => {
+          console.error('Error fetching GitHub profile:', error);
+          profileContainer.innerHTML = '<h1>Error with the fetch request to Github API</h1>';
+        });
+
+    }
+  </script>
+</body>
+
+</html>
